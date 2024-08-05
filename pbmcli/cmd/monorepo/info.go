@@ -5,6 +5,7 @@ package monorepo
 
 import (
 	"fmt"
+	"pbmcli/pbmcli/service"
 
 	"github.com/spf13/cobra"
 )
@@ -21,7 +22,17 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("info called")
+		execute()
 	},
+}
+
+func execute() {
+	monorepo, err := service.GetMonorepo()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(monorepo)
 }
 
 func init() {

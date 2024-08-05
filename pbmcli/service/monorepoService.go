@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"gopkg.in/yaml.v3"
 	"log"
 	"os"
@@ -9,13 +10,13 @@ import (
 
 const monorepoFolderName = ".pbm"
 
-func getMonorepo() (*Monorepo, error) {
+func GetMonorepo() (*Monorepo, error) {
 	dir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
 	}
 	if !checkIfProjectExists(&dir) {
-		log.Println("Project does not exist in this directory.")
+		return nil, errors.New("Monorepo does not exist in this directory")
 	}
 
 	yamlFile, err := os.ReadFile(filepath.Join(monorepoFolderName, "monorepo.yaml"))
